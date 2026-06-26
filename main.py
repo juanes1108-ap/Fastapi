@@ -35,7 +35,7 @@ async def crear_cliente(datos_cliente: clientecrear):
     lista_clientes.append(cliente_val)
     return cliente_val
 
-#endpoint para editar un cliente existente y agregar a la lista de clientes
+#endpoint para editar un cliente existente y agregar a la lista
 @app.patch("/clientes/{cliente_id}", response_model=Cliente)
 async def editar_cliente(cliente_id: int, datos_cliente: clienteEditar):
     for i, cliente in enumerate(lista_clientes):
