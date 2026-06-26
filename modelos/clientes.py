@@ -14,6 +14,9 @@ class clientecrear(ClienteBase):
 class clienteEditar(ClienteBase):
     pass
 
+class clienteEliminar(BaseModel):
+    id: int
+
 class Cliente(ClienteBase):
     id: int | None = None
 

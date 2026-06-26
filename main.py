@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
-from modelos.clientes import Cliente, clientecrear,clienteEditar
+from modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEliminar
+
 
 app = FastAPI()
 
@@ -44,4 +45,14 @@ async def editar_cliente(cliente_id: int, datos_cliente: clienteEditar):
             cliente_val.id = cliente_id
             lista_clientes[i] = cliente_val
             return cliente_val
-    raise HTTPException(status_code=404, detail="Cliente con {cliente_id} no fue encontrado")
+    raise HTTPException(status_code=404, detail=f"Cliente con {cliente_id} no fue encontrado")
+
+
+#endpoint para eliminar un cliente existente
+@app.delete("/clientes/{cliente_id}", response_model=Cliente)
+async def eliminar_cliente(cliente_id: int):
+    for i, cliente in enumerate(lista_clientes):
+        if cliente.id == cliente_id:
+            cliente_eliminado = lista_clientes.pop(i)
+            return cliente_eliminado
+    raise HTTPException(status_code=404, detail=f"Cliente con {cliente_id} no fue encontrado")
