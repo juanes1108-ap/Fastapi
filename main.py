@@ -1,12 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEliminar
-
+from modelos.transacciones import TransaccionBase, transaccionCrear, transaccionEditar
+from modelos.facturas import Factura, facturaCrear, facturaEditar
 
 app = FastAPI()
 
 
 
 lista_clientes: list[Cliente] = []
+lista_transacciones: list[TransaccionBase] = []
+lista_facturas: list[Factura] = []
  
 
 #endpoint para listar clientes
@@ -56,3 +59,13 @@ async def eliminar_cliente(cliente_id: int):
             cliente_eliminado = lista_clientes.pop(i)
             return cliente_eliminado
     raise HTTPException(status_code=404, detail=f"Cliente con {cliente_id} no fue encontrado")
+
+
+
+#|||||||||||||
+#crear endpoint para transacciones
+
+
+@app.get(" /transacciones", response_model=list[TransaccionBase])
+async def listar_transacciones():
+    pass

@@ -6,3 +6,12 @@ class FacturaBase(BaseModel):
     fecha: str
     total: float
     cliente_id: int
+
+
+#crear modulo crear factura
+class facturaCrear(FacturaBase):
+    pass
+
+#crear modulo editar factura
+class facturaEditar(FacturaBase):
+    pass
