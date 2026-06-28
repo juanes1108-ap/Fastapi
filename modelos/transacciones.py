@@ -6,8 +6,7 @@ from .clientes import Cliente
 class TransaccionBase(BaseModel):
     cantidad: int
     vr_unitario: float
-    id_factura: int
-    cliente: Cliente #esta es la relacion con el objeto cliente
+   
 
 class transaccionCrear(TransaccionBase):
     pass
@@ -17,6 +16,7 @@ class transaccionEditar(TransaccionBase):
 
 class transaccion(TransaccionBase):
     id: int | None = None
+    factura_id : int | None = None
 
 class transaccionEliminar(BaseModel):
     id: int
