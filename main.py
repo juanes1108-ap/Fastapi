@@ -177,7 +177,7 @@ async def editar_transaccion(transaccion_id: int, datos_transaccion: transaccion
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Transaccion con {transaccion_id} no fue encontrada")
 
 
-#endpoint para eliminar una transaccion existente
+#endpoint para eliminar una transaccion 
 @app.delete("/transacciones/{transaccion_id}", response_model=transaccion)
 async def eliminar_transaccion(transaccion_id: int):
     for i, trans in enumerate(lista_transacciones):
