@@ -2,13 +2,16 @@ from fastapi import APIRouter, HTTPException, status
 from app.modelos.facturas import Factura, facturaCrear, facturaEditar, facturaEliminar
 from app.modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEliminar, ClienteBase
 from app.modelos.transacciones import TransaccionBase, transaccionCrear, transaccionEditar, eliminarTransaccion, transaccion
+from ..listas import lista_facturas, lista_clientes, lista_transacciones
+
+
 
 rutas_transacciones = APIRouter()
 
 #lista de transacciones
-lista_transacciones: list[TransaccionBase] = []
-lista_facturas: list[Factura] = []
-lista_clientes: list[Cliente] = []
+#lista_transacciones: list[TransaccionBase] = []
+#lista_facturas: list[Factura] = []
+#lista_clientes: list[Cliente] = []
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 

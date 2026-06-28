@@ -1,10 +1,12 @@
 from fastapi import APIRouter, HTTPException, status
 from app.modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEliminar, ClienteBase
+from ..listas import lista_clientes
+
 
 rutas_clientes = APIRouter()
 
 #lista de clientes
-lista_clientes: list[Cliente] = []
+#lista_clientes: list[Cliente] = []
 
 
 #endpoint para listar clientes
