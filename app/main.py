@@ -2,6 +2,9 @@ from fastapi import FastAPI, HTTPException, status
 from app.modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEliminar, ClienteBase
 from app.modelos.transacciones import TransaccionBase, transaccionCrear, transaccionEditar, eliminarTransaccion, transaccion
 from app.modelos.facturas import Factura, facturaCrear, facturaEditar, facturaEliminar
+from app.enrutadores import clientes
+
+
 
 app = FastAPI()
 
@@ -11,54 +14,9 @@ lista_clientes: list[Cliente] = []
 lista_transacciones: list[TransaccionBase] = []
 lista_facturas: list[Factura] = []
  
+#incluir el enrutador de clientes
+app.include_router(clientes.rutas_clientes, tags=["Clientes"])
 
-#endpoint para listar clientes
-
-@app.get("/clientes", response_model=list[Cliente])
-async def listar_clientes():
-    return lista_clientes
-
-#endpoint para obtener un cliente específico
-
-@app.get("/clientes/{cliente_id}", response_model=Cliente)
-async def listar_cliente(cliente_id: int):
-    #recorer la lista de clientes y buscar el cliente con el id especificado
-    for i, cliente in enumerate(lista_clientes):
-        if cliente.id == cliente_id:
-            return cliente
-    raise HTTPException(status_code=404, detail="Cliente no encontrado") 
-
-#endpoint para crear un cliente y agragar a la lista de clientes
-
-@app.post("/clientes", response_model=Cliente)
-async def crear_cliente(datos_cliente: clientecrear):
-    cliente_val = Cliente.model_validate(datos_cliente.model_dump())
-    #generar id
-    id_cliente = len(lista_clientes)+1
-    cliente_val.id = id_cliente
-    lista_clientes.append(cliente_val)
-    return cliente_val
-
-#endpoint para editar un cliente existente y agregar a la lista
-@app.patch("/clientes/{cliente_id}", response_model=Cliente)
-async def editar_cliente(cliente_id: int, datos_cliente: clienteEditar):
-    for i, cliente in enumerate(lista_clientes):
-        if cliente.id == cliente_id:
-            cliente_val = Cliente.model_validate(datos_cliente.model_dump())
-            cliente_val.id = cliente_id
-            lista_clientes[i] = cliente_val
-            return cliente_val
-    raise HTTPException(status_code=404, detail=f"Cliente con {cliente_id} no fue encontrado")
-
-
-#endpoint para eliminar un cliente existente
-@app.delete("/clientes/{cliente_id}", response_model=Cliente)
-async def eliminar_cliente(cliente_id: int):
-    for i, cliente in enumerate(lista_clientes):
-        if cliente.id == cliente_id:
-            cliente_eliminado = lista_clientes.pop(i)
-            return cliente_eliminado
-    raise HTTPException(status_code=404, detail=f"Cliente con {cliente_id} no fue encontrado")
 
 
 
