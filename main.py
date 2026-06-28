@@ -184,4 +184,4 @@ async def eliminar_transaccion(transaccion_id: int):
         if trans.id == transaccion_id:
             transaccion_eliminada = lista_transacciones.pop(i)
             return transaccion_eliminada
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Transaccion  {transaccion_id} no fue encontrada")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Transaccion con {transaccion_id} no fue encontrada")
