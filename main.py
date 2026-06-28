@@ -81,9 +81,25 @@ async def listar_factura(factura_id: int):
 
 
 #endpoint para crear una factura y agregar a la lista de facturas
-@app.post("/facturas", response_model=Factura)
-async def crear_factura(datos_factura: facturaCrear):
-    pass
+@app.post("/facturas/{cliente_id}", response_model=Factura)
+async def crear_factura(cliente_id: int, datos_factura: facturaCrear):
+    #buscar el cliente con el id especificado
+    cliente_encontrado = None
+    for cliente in lista_clientes:
+        if cliente.id == cliente_id:
+            cliente_encontrado = cliente
+            break
+    #mensaje si el cliete no fue encontrado
+    if not cliente_encontrado:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Cliente con {cliente_id} no fue encontrado")
+    #validar datos de la factura
+    factura_val = Factura.model_validate(datos_factura.model_dump())
+    factura_val.cliente = cliente_encontrado
+    #generar id de la factura
+    factura_val.id = len(lista_facturas)+1
+    lista_facturas.append(factura_val)
+    return factura_val
+
 #endpoint para editar una factura existente y agregar a la lista
 @app.patch("/facturas/{factura_id}", response_model=Factura)
 async def editar_factura(factura_id: int, datos_factura: facturaEditar):

@@ -15,6 +15,12 @@ class transaccionCrear(TransaccionBase):
 class transaccionEditar(TransaccionBase):
     pass
 
+class transaccion(TransaccionBase):
+    id: int | None = None
+
+class transaccionEliminar(BaseModel):
+    id: int
+
 class eliminarTransaccion(BaseModel):
     id: int 
     
