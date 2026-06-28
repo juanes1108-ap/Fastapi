@@ -63,9 +63,54 @@ async def eliminar_cliente(cliente_id: int):
 
 
 #|||||||||||||
-#crear endpoint para transacciones
+#crear endpoint para Facturas
 
+#listar todas las facturas
+@app.get("/facturas", response_model=list[Factura])
+async def listar_facturas():
+    return lista_facturas
 
-@app.get(" /transacciones", response_model=list[TransaccionBase])
-async def listar_transacciones():
+#endpoint para obtener una factura específica
+@app.get(" /facturas/{factura_id}", response_model=Factura)
+async def listar_factura(factura_id: int):
     pass
+#endpoint para crear una factura y agregar a la lista de facturas
+@app.post("/facturas", response_model=Factura)
+async def crear_factura(datos_factura: facturaCrear):
+    pass
+#endpoint para editar una factura existente y agregar a la lista
+@app.patch("/facturas/{factura_id}", response_model=Factura)
+async def editar_factura(factura_id: int, datos_factura: facturaEditar):
+    pass
+
+#endpoint para eliminar una factura existente
+@app.delete("/facturas/{factura_id}", response_model=Factura)
+async def eliminar_factura(factura_id: int):
+    pass
+
+#||||||||||||||||||||||||
+#ednpoint para transacciones
+#listar todas las transacciones
+@app.get("/transacciones", response_model=list[TransaccionBase])
+async def listar_transacciones():
+    return lista_transacciones
+
+#endpoint para obtener una transaccion específica   
+@app.get("/transacciones/{transaccion_id}", response_model=TransaccionBase)
+async def listar_transaccion(transaccion_id: int):
+    pass
+
+#endpoint para crear una transaccion y agregar a la lista de transacciones
+@app.post("/transacciones", response_model=TransaccionBase )
+async def   crear_transaccion(datos_transaccion: transaccionCrear):
+    pass
+
+#endpoint para editar una transaccion existente y agregar a la lista
+@app.patch("/transacciones/{transaccion_id}", response_model=TransaccionBase)
+async def editar_transaccion(transaccion_id: int, datos_transaccion: transaccionEditar):
+    pass
+
+#endpoint para eliminar una transaccion existente
+@app.delete("/transacciones/{transaccion_id}", response_model=TransaccionBase)
+async def eliminar_transaccion(transaccion_id: int):
+    pass    
