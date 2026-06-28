@@ -3,6 +3,7 @@ from app.modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEli
 
 rutas_clientes = APIRouter()
 
+#lista de clientes
 lista_clientes: list[Cliente] = []
 
 
