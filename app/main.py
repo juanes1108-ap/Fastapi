@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, status
-from modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEliminar
-from modelos.transacciones import TransaccionBase, transaccionCrear, transaccionEditar, eliminarTransaccion, transaccion
-from modelos.facturas import Factura, facturaCrear, facturaEditar, facturaEliminar
+from app.modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEliminar, ClienteBase
+from app.modelos.transacciones import TransaccionBase, transaccionCrear, transaccionEditar, eliminarTransaccion, transaccion
+from app.modelos.facturas import Factura, facturaCrear, facturaEditar, facturaEliminar
 
 app = FastAPI()
 
