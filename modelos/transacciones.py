@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from clientes import Cliente
+from .clientes import Cliente
 
 #crear modelo de datos para la transaccion(id, cantidad, vr_unitario, id_factura)
 

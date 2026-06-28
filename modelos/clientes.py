@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from clientes import Cliente
+
 
 #crear modelo de datos para el cliente(id, nombre, edad, descripcion)
 

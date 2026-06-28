@@ -1,11 +1,10 @@
 from pydantic import BaseModel
-from clientes import Cliente
+from .clientes import Cliente
 
 #crear modelo de datos para la factura(id, fecha, total, cliente_id)
 class FacturaBase(BaseModel):
-    id: int
     fecha: str
-    total: float
+    vr_total: float
     cliente: Cliente
 
 
@@ -13,7 +12,7 @@ class FacturaBase(BaseModel):
 class facturaCrear(FacturaBase):
     pass
 
-class factura(FacturaBase):
+class Factura(FacturaBase):
     pass
 
 #crear modulo editar factura

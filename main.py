@@ -1,7 +1,7 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 from modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEliminar
-from modelos.transacciones import TransaccionBase, transaccionCrear, transaccionEditar
-from modelos.facturas import Factura, facturaCrear, facturaEditar
+from modelos.transacciones import TransaccionBase, transaccionCrear, transaccionEditar, eliminarTransaccion
+from modelos.facturas import Factura, facturaCrear, facturaEditar, facturaEliminar
 
 app = FastAPI()
 
@@ -71,9 +71,15 @@ async def listar_facturas():
     return lista_facturas
 
 #endpoint para obtener una factura específica
-@app.get(" /facturas/{factura_id}", response_model=Factura)
+@app.get("/facturas/{factura_id}", response_model=Factura)
 async def listar_factura(factura_id: int):
-    pass
+    for i, factura in enumerate(lista_facturas):
+        if factura.id == factura_id:
+            return factura
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Factura con {factura_id} no fue encontrada")
+
+
+
 #endpoint para crear una factura y agregar a la lista de facturas
 @app.post("/facturas", response_model=Factura)
 async def crear_factura(datos_factura: facturaCrear):
