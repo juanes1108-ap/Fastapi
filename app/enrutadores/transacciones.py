@@ -3,8 +3,8 @@ from app.modelos.facturas import Factura, facturaCrear, facturaEditar, facturaEl
 from app.modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEliminar, ClienteBase
 from app.modelos.transacciones import TransaccionBase, transaccionCrear, transaccionEditar, eliminarTransaccion, transaccion
 from ..listas import lista_facturas, lista_clientes, lista_transacciones
-
-
+from ..conexion_bd import Sesion_dependancia
+from sqlmodel import select
 
 rutas_transacciones = APIRouter()
 
@@ -18,7 +18,10 @@ rutas_transacciones = APIRouter()
 #ednpoint para transacciones
 #listar todas las transacciones
 @rutas_transacciones.get("/transacciones", response_model=list[transaccion])
-async def listar_transacciones():
+async def listar_transacciones(sesion: Sesion_dependancia):
+    #select * from factura
+    consulta = select(Factura)
+    lista_transacciones =sesion.exec(consulta).all
     return lista_transacciones
 
 #endpoint para obtener una transaccion específica   
