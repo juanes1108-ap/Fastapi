@@ -3,7 +3,7 @@ from sqlmodel import Session, SQLModel, create_engine
 from typing import Annotated
 
 
-nombre_bd = "bd_proyecto.sqlite"
+nombre_bd = "bd_proyecto.sqlite3"
 url_bd = f"sqlite:///{nombre_bd}"
 
 #motor de bd

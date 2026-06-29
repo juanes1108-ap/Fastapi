@@ -1,13 +1,13 @@
 from pydantic import BaseModel
-
+from sqlmodel import SQLModel,Field, Relationship
 
 #crear modelo de datos para el cliente(id, nombre, edad, descripcion)
 
-class ClienteBase(BaseModel):
-    nombre: str
-    edad: int
-    email: str
-    descripcion: str
+class ClienteBase(SQLModel):
+    nombre: str = Field(default=None)
+    edad: int = Field(default=None)
+    email: str = Field(default=None)
+    descripcion: str | None = Field(default=None)
 
 class clientecrear(ClienteBase):
     pass
@@ -18,8 +18,8 @@ class clienteEditar(ClienteBase):
 class clienteEliminar(BaseModel):
     id: int
 
-class Cliente(ClienteBase):
-    id: int | None = None
+class Cliente(ClienteBase, table = True ):
+    id: int | None = Field(default=None, primary_key=True)
 
 
 

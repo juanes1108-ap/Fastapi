@@ -5,10 +5,10 @@ from app.modelos.facturas import Factura, facturaCrear, facturaEditar, facturaEl
 from app.enrutadores import clientes
 from app.enrutadores import facturas
 from app.enrutadores import transacciones
+from app.conexion_bd import crear_tablas
 
 
-
-app = FastAPI()
+app = FastAPI(lifespan=crear_tablas)
 
 
 
