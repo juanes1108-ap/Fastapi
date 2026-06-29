@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from sqlmodel import SQLModel,Field, Relationship
 
+
+
 #crear modelo de datos para el cliente(id, nombre, edad, descripcion)
 
 class ClienteBase(SQLModel):
@@ -20,6 +22,9 @@ class clienteEliminar(BaseModel):
 
 class Cliente(ClienteBase, table = True ):
     id: int | None = Field(default=None, primary_key=True)
+    #relacion virtual
+    factura : list["Factura"] = Relationship(back_populates="cliente")
 
 
-
+class clienteleer(ClienteBase):
+    id: int

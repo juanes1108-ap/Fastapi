@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from app.modelos.facturas import Factura, facturaCrear, facturaEditar, facturaEliminar
+from app.modelos.facturas import Factura, facturaCrear, facturaEditar, facturaEliminar, facturaleer
 from app.modelos.clientes import Cliente, clientecrear,clienteEditar, clienteEliminar, ClienteBase
 from app.modelos.transacciones import TransaccionBase, transaccionCrear, transaccionEditar, eliminarTransaccion, transaccion
 from ..listas import lista_facturas, lista_clientes, lista_transacciones
@@ -21,7 +21,7 @@ rutas_facturas = APIRouter()
 #crear endpoint para Facturas
 
 #listar todas las facturas
-@rutas_facturas.get("/facturas", response_model=list[Factura])
+@rutas_facturas.get("/facturas", response_model=list[facturaleer])
 async def listar_facturas(sesion: Sesion_dependancia):
     #select * from factura
     consulta = select(Factura)
