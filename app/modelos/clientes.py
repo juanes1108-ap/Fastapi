@@ -1,9 +1,10 @@
 from pydantic import BaseModel
-from sqlmodel import SQLModel,Field, Relationship
+from sqlmodel import SQLModel, Field, Relationship
+from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from app.modelos.facturas import Factura
 
-
-#crear modelo de datos para el cliente(id, nombre, edad, descripcion)
 
 class ClienteBase(SQLModel):
     nombre: str = Field(default=None)
@@ -20,11 +21,9 @@ class clienteEditar(ClienteBase):
 class clienteEliminar(BaseModel):
     id: int
 
-class Cliente(ClienteBase, table = True ):
+class Cliente(ClienteBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    #relacion virtual
-    factura : list["Factura"] = Relationship(back_populates="cliente")
-
+    factura: list["Factura"] = Relationship(back_populates="cliente")
 
 class clienteleer(ClienteBase):
     id: int
