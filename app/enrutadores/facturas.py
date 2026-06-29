@@ -25,7 +25,7 @@ rutas_facturas = APIRouter()
 async def listar_facturas(sesion: Sesion_dependancia):
     #select * from factura
     consulta = select(Factura)
-    lista_facturas  =sesion.exec(consulta).all
+    lista_facturas  =sesion.exec(consulta).all()
     return lista_facturas
 
 #endpoint para obtener una factura específica

@@ -35,7 +35,7 @@ class facturaCrear(FacturaBase):
 class Factura(FacturaBase, table= True):
     id: int | None = Field(default=None, primary_key= True)
     #transacciones: list[transaccion] = []
-    cliente_id: int = Field(default= None, foreign_key="cliente.id")
+    cliente_id: int | None = Field(default=None, foreign_key="cliente.id")
 
 #crear modulo editar factura
 class facturaEditar(FacturaBase):

@@ -16,13 +16,17 @@ rutas_transacciones = APIRouter()
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 #ednpoint para transacciones
+
+
 #listar todas las transacciones
 @rutas_transacciones.get("/transacciones", response_model=list[transaccion])
 async def listar_transacciones(sesion: Sesion_dependancia):
     #select * from factura
-    consulta = select(Factura)
-    lista_transacciones =sesion.exec(consulta).all
+    consulta = select(transaccion)
+    lista_transacciones =sesion.exec(consulta).all()
     return lista_transacciones
+
+
 
 #endpoint para obtener una transaccion específica   
 @rutas_transacciones.get("/transacciones/{transaccion_id}", response_model=transaccion)
@@ -34,23 +38,21 @@ async def listar_transaccion(transaccion_id: int):
 
 #endpoint para crear una transaccion y agregar a la lista de transacciones
 @rutas_transacciones.post("/transacciones/{factura_id}" , response_model=transaccion)
-async def   crear_transaccion(factura_id: int, datos_transaccion: transaccionCrear):
+async def   crear_transaccion(factura_id: int, datos_transaccion: transaccionCrear, sesion: Sesion_dependancia):
      #buscar factura
-    factura_encontrada = None
-    for factura in lista_facturas:
-        if factura.id == factura_id:
-            factura_encontrada = factura
-            break
+    factura_encontrada  = sesion.get(Factura, factura_id)
     #mensaje si la factura no fue encontrada
     if not factura_encontrada:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Factura con {factura_id} no fue encontrada")
     
     #validar datos de la factura
-    transaccion_val = transaccion.model_validate(datos_transaccion.model_dump())
-    transaccion_val.factura_id = factura_id
-    transaccion_val.id = len(lista_transacciones) + 1
-    lista_transacciones.append(transaccion_val)
-    factura_encontrada.transacciones.append(transaccion_val)
+    transaccion_dict = datos_transaccion.model_dump()
+    transaccion_dict["factura_id"] = factura_id
+    transaccion_val = transaccion.model_validate(transaccion_dict)
+    #guardar en la base de datos
+    sesion.add(transaccion_val)
+    sesion.commit()
+    sesion.refresh(transaccion_val)
     return transaccion_val
 
 
